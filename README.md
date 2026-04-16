@@ -17,7 +17,7 @@ A simple scraper to collect flight history data from FlightRadar24 using Playwri
 Run the following command from the project root:
 
 ```bash
-docker build -t fr24-scraper:1.0.0 .
+docker build -t fr24-scraper-playwright:1.0.0 .
 ```
 
 ---
@@ -38,7 +38,7 @@ mkdir data
 docker run --rm \
   --env-file .env \
   -v $(pwd)/data:/app/data \
-  fr24-scraper:1.0.0
+  fr24-scraper-playwright:1.0.0
 ```
 
 ---
@@ -69,7 +69,7 @@ docker run --rm \
   --env-file .env \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/airline:/app/airline \
-  fr24-scraper:1.0.0
+  fr24-scraper-playwright:1.0.0
 ```
 
 ---
