@@ -1,0 +1,8 @@
+.env
+.venv
+.git
+data/
+pyproject.toml
+uv.lock
+.python-version
+.gitignore

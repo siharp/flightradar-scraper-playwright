@@ -1,0 +1,5 @@
+bs4>=0.0.2
+dotenv>=0.9.9
+pandas>=3.0.2
+playwright>=1.58.0
+pyarrow>=23.0.1
