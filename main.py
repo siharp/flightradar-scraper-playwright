@@ -2,6 +2,7 @@ import os
 import logging
 import pandas as pd
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
+from playwright_stealth import Stealth
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -23,14 +24,34 @@ SLEEP_INTERVAL = 5000
 # ──────────────────────────────────────────────
 # Init browser
 # ──────────────────────────────────────────────
-def init_browser(playwright, headless=True):
-    browser = playwright.chromium.launch(headless=headless)
+def init_browser(playwright, headless=False):
+    browser = playwright.chromium.launch(
+        headless=headless,
+        args=[
+            "--no-sandbox",
+            "--disable-blink-features=AutomationControlled",
+            "--disable-infobars",
+            "--disable-dev-shm-usage",
+        ]
+    )
 
     context = browser.new_context(
-        viewport={"width": 1920, "height": 1080}
+        viewport={"width": 1920, "height": 1080},
+        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) "
+                   "Chrome/124.0.0.0 Safari/537.36",
+        locale="en-US",
+        timezone_id="Asia/Jakarta",
+        extra_http_headers={
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+        }
     )
 
     page = context.new_page()
+
+    # Pakai langsung tanpa context manager
+    Stealth().apply_stealth_sync(page)
 
     return browser, page
 
